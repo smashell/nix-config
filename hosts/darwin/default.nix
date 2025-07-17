@@ -18,9 +18,20 @@ let user = "%USER%"; in
     package = pkgs.nix;
 
     settings = {
+      # enable flakes globally
+      experimental-features = ["nix-command" "flakes"];
+
       trusted-users = [ "@admin" "${user}" ];
-      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
-      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+      substituters = [ 
+        "https://mirrors.ustc.edu.cn/nix-channels/store"
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+        "https://mirror.sjtu.edu.cn/nix-channels/store"
+        "https://nix-community.cachix.org" 
+        "https://cache.nixos.org" 
+      ];
+      trusted-public-keys = [ 
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" 
+      ];
     };
 
     gc = {

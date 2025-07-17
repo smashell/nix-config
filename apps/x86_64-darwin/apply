@@ -27,9 +27,18 @@ _print() {
 _prompt() {
   local message="$1"
   local variable="$2"
+  local default_value="$3"
 
-  _print "$message"
+  if [ -n "$default_value" ]; then
+    _print "${message}(default: $default_value): "
+  else
+    _print "${message}"
+  fi
+
   read -r $variable
+  if [ -n "$default_value" ] && [ -z "${!variable}" ]; then
+    eval "$variable=\"$default_value\""  # Assign default value when user presses Enter
+  fi
 }
 
 insert_secrets_output() {
@@ -102,9 +111,9 @@ ask_for_star() {
   response=${response:-yes} # Set default response to 'yes' if input is empty
   if [[ "$response" =~ ^[Yy](es)?$ ]] || [[ -z "$response" ]]; then
     if [[ "$OS" == "Darwin" ]]; then
-      open "https://github.com/dustinlyons/nixos-config"
+      open "https://github.com/smashell/nix-config"
     else
-      xdg-open "https://github.com/dustinlyons/nixos-config"
+      xdg-open "https://github.com/smashell/nix-config"
     fi
   fi
 }
@@ -139,7 +148,7 @@ if [[ -z "$GIT_NAME" ]]; then
 fi
 
 _prompt "${YELLOW}Please enter your Github username: ${NC}" GITHUB_USER
-_prompt "${YELLOW}Please enter your Github secrets repository name: ${NC}" GITHUB_SECRETS_REPO
+_prompt "${YELLOW}Please enter your Github secrets repository name: ${NC}" GITHUB_SECRETS_REPO "nix-secrets"
 
 export GITHUB_USER
 export GITHUB_SECRETS_REPO

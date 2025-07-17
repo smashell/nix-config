@@ -70,7 +70,7 @@ with pkgs; [
   yazi
   obsidian
   # microsoft-edge
-  drawio
+  #drawio # install by homebrew, pkgs in nix is too old
   zotero
   zoxide
   vscode

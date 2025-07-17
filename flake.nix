@@ -67,6 +67,7 @@
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;
+        "switch" = mkApp "switch" system;
         "build-switch" = mkApp "build-switch" system;
         "copy-keys" = mkApp "copy-keys" system;
         "create-keys" = mkApp "create-keys" system;
