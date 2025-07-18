@@ -3,7 +3,7 @@
 let user = "%USER%"; in
 {
   age.identityPaths = [
-    "/Users/${user}/.ssh/id_ed25519"
+    "/Users/${user}/.ssh/id_ed25519_agenix"
   ];
 
   # Your secrets go here
@@ -17,7 +17,7 @@ let user = "%USER%"; in
   #       so Github reads it correctly.
 
   age.secrets."cute-cloud-conf" = {
-    symlink = false;
+    symlink = true;
     path = "/Users/${user}/.config/clash/CuteCloud.yaml";
     file =  "${secrets}/cute-cloud-conf.age";
     mode = "600";

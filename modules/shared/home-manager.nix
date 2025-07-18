@@ -88,7 +88,7 @@ let name = "%NAME%";
 	    editor = "vim";
         autocrlf = "input";
       };
-      commit.gpgsign = true;
+      commit.gpgsign = false;
       pull.rebase = true;
       rebase.autoStash = true;
     };
@@ -281,6 +281,8 @@ let name = "%NAME%";
     ];
     matchBlocks = {
       "github.com" = {
+        hostname = "ssh.github.com";
+        port = 443;
         identitiesOnly = true;
         identityFile = [
           (lib.mkIf pkgs.stdenv.hostPlatform.isLinux

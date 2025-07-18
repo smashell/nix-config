@@ -1,4 +1,4 @@
-This is my personal NixOS configuration.
+This is my personal NixOS configuration. [中文说明](./README_zh.md).
 # Installing
 ## MacOS
 ### 1. Install Nix
