@@ -18,15 +18,16 @@ with pkgs; [
   zip
   xz
   just
-  meson
-  ninja
+  # meson
+  # ninja
+  glow
 
   # Encryption and security tools
   age
   age-plugin-yubikey
   gnupg
   libfido2
-  sops
+  # sops
 
   # Cloud-related tools and SDKs
   docker

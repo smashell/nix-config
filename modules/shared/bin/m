@@ -1,0 +1,67 @@
+#!/bin/bash
+# created by: taizi<shanghai.sush@taobao.com>
+
+machine_list="$HOME/.machine_list.conf"
+declare -a modules
+
+# show_array(array)
+function show_array() {
+	local array=$1
+	echo ${array[@]}
+}
+
+# read_machine_list(filename)
+function read_machine_list() {
+	while read hostname ip port user group
+    do
+        group=`echo $group|sed 's#/#_#g'`
+		eval "num=\${#$group[@]}; $group[\$num]=$hostname:$user@$ip:$port"
+		[[ "${modules[@]}" =~ $group ]] || modules[${#modules[@]}]=$group
+	done< $1
+}
+
+function select_host() {
+	if [[ $module == $item ]];
+	then
+		eval "hosts=(\${$module[@]})"
+		select selected_content in ${hosts[@]}
+		do
+			ip=`echo $selected_content|awk -F: '{print $2}'`
+			for content in "${hosts[@]}"
+			do
+				if [[ $selected_content == $content ]]
+				then
+					port=`echo $selected_content|awk -F: '{print $3}'`
+					echo "ssh $ip -p $port"
+					xxh $ip -p $port; exit
+				fi
+			done 
+		done
+	fi
+}
+
+# select_module(module)
+function select_module() {
+	for item in "${modules[@]}"
+	do
+		select_host $item
+	done
+}
+
+# show_menu()
+function show_menu() {
+	select module in "${modules[@]}"
+	do
+		select_module $module
+	done
+}
+
+function main() {
+	# read machine list
+	read_machine_list $machine_list
+	# show menu
+	show_menu
+}
+
+# entry of program
+main

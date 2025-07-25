@@ -12,10 +12,12 @@ export NIXPKGS_ALLOW_UNFREE=1
 
 echo "${YELLOW}Starting build...${NC}"
 nix --extra-experimental-features 'nix-command flakes' build .#$FLAKE_SYSTEM $@
+#nix --extra-experimental-features 'nix-command flakes' build --option substituters https://mirrors.ustc.edu.cn/nix-channels/store -L --verbose --show-trace .#$FLAKE_SYSTEM $@
 
 echo "${YELLOW}Switching to new generation...${NC}"
 # See https://github.com/nix-darwin/nix-darwin/issues/1457 on why we need sudo
 sudo ./result/sw/bin/darwin-rebuild switch --flake .#${SYSTEM_TYPE} $@
+#sudo ./result/sw/bin/darwin-rebuild switch -L --verbose --show-trace --flake .#${SYSTEM_TYPE} $@
 #
 # echo "${YELLOW}Cleaning up...${NC}"
 # unlink ./result

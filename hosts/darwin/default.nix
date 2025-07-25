@@ -62,18 +62,6 @@ in
     agenix.packages."${pkgs.system}".default
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
-  # launchd.user.agents.emacs.path = [ config.environment.systemPath ];
-  # launchd.user.agents.emacs.serviceConfig = {
-  #   KeepAlive = true;
-  #   ProgramArguments = [
-  #     "/bin/sh"
-  #     "-c"
-  #     "/bin/wait4path ${pkgs.emacs}/bin/emacs && exec ${pkgs.emacs}/bin/emacs --fg-daemon"
-  #   ];
-  #   StandardErrorPath = "/tmp/emacs.err.log";
-  #   StandardOutPath = "/tmp/emacs.out.log";
-  # };
-
   system = {
     checks.verifyNixPath = false;
     primaryUser = user;
@@ -129,7 +117,7 @@ in
         "com.apple.sound.beep.feedback" = 0;  # disable beep sound when pressing volume up/down key
         AppleInterfaceStyle = "Dark";  # dark mode
         AppleKeyboardUIMode = 3;  # Mode 3 enables full keyboard control.
-        ApplePressAndHoldEnabled = true;  # enable press and hold
+        ApplePressAndHoldEnabled = false;  # disable press and hold, 开启了按住某个键就不会重复输入
         AppleEnableMouseSwipeNavigateWithScrolls = true;
 
         # If you press and hold certain keyboard keys when in a text area, the key’s character begins to repeat.

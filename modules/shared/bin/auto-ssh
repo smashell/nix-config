@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+   echo "Usage: ./auto_ssh.sh hostlist"
+   exit 1
+fi
+hostlist=$1
+
+if [ ! -f $hostlist ]
+then
+   echo "hostlist[$hostlist] is not exist. format: ip,port,username,password"
+   exit 1
+fi
+
+if [ ! -f ~/.ssh/id_rsa ];then
+ ssh-keygen -t rsa
+else
+ echo "id_rsa has created already, not create again."
+fi
+ 
+while read line
+do
+    [[ $line =~ ^#.* ]] && continue
+    ip=`echo $line | cut -d "," -f 1`
+    port=`echo $line | cut -d "," -f 2`
+    user=`echo $line | cut -d "," -f 3`
+    passwd=`echo $line | cut -d "," -f 4`
+    expect <<EOF
+      set timeout 10
+      spawn ssh-copy-id -p $port -i $HOME/.ssh/id_rsa.pub $user@$ip
+      expect {
+        "yes/no" { send "yes\n";exp_continue }
+        "password" { send "$passwd\n" }
+      }
+      expect "password" { send "$passwd\n" }
+EOF
+done <  $hostlist

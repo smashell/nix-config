@@ -28,7 +28,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     astro-nvim = {
-      url = "github:LinuCC/dotvim";
+      # url = "github:LinuCC/dotvim";
+      url = "github:smashell/NixAstroNvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
