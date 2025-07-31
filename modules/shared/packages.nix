@@ -48,6 +48,7 @@ with pkgs; [
   # nodePackages.npm # globally install npm
   # nodePackages.prettier
   # nodejs
+  uv
 
   # Text and terminal utilities
   htop
@@ -62,6 +63,8 @@ with pkgs; [
   unzip
   p7zip
   zsh-powerlevel10k
+  # exa
+  duf
 
   jq # A lightweight and flexible command-line JSON processor
   yq-go # yaml processer https://github.com/mikefarah/yq

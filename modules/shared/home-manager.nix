@@ -4,21 +4,6 @@ let name = "%NAME%";
     user = "%USER%";
     email = "%EMAIL%"; in
 {
-  home = {
-    file = {
-      ".bin" = {
-        source = ./bin; 
-        # target = "dir"; 
-      };
-      # ".bin/libreoffice" = {
-      #   executable = true;
-      #   text = ''
-      #     #!/bin/sh
-      #     exec "/Applications/LibreOffice.app/Contents/MacOS/soffice" "$@"
-      #   '';
-      # };
-    };
-  }; # home
 
   zoxide = {
     enable = true;
@@ -54,6 +39,7 @@ let name = "%NAME%";
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
       export PATH=$HOME/.local/share/bin:$PATH
+      export PATH=$HOME/.bin:$PATH
 
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"

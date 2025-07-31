@@ -11,9 +11,10 @@ _:
   # "slack"
   # "telegram"
   # "zoom"
+  "feisu"
 
   # Utility Tools
-  "syncthing"
+  # "syncthing"
 
   # # Entertainment Tools
   # "vlc"
