@@ -11,10 +11,11 @@ _:
   # "slack"
   # "telegram"
   # "zoom"
-  "feisu"
+  # "feishu"
 
   # Utility Tools
   # "syncthing"
+  "input-source-pro"
 
   # # Entertainment Tools
   # "vlc"

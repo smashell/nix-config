@@ -21,6 +21,7 @@ with pkgs; [
   # meson
   # ninja
   glow
+  ansible
 
   # Encryption and security tools
   age
@@ -32,10 +33,15 @@ with pkgs; [
   # Cloud-related tools and SDKs
   docker
   docker-compose
+  lazydocker
 
   # Media-related packages
   # emacs-all-the-icons-fonts
   dejavu_fonts
+  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+  nerd-fonts."ubuntu-mono"
+  nerd-fonts."fira-code"
+  nerd-fonts."fira-mono"
   # ffmpeg
   fd
   font-awesome
@@ -65,6 +71,7 @@ with pkgs; [
   zsh-powerlevel10k
   # exa
   duf
+  difftastic
 
   jq # A lightweight and flexible command-line JSON processor
   yq-go # yaml processer https://github.com/mikefarah/yq
@@ -72,6 +79,8 @@ with pkgs; [
   localsend
   xsel
   yazi
+  yaziPlugins.rich-preview # Rich preview for Yazi
+  # rich-cli            # Rich command-line interface for rich preview
   obsidian
   # microsoft-edge
   #drawio # install by homebrew, pkgs in nix is too old
