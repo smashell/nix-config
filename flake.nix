@@ -27,13 +27,17 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    secrets = {
+      url = "git+ssh://git@github.com/smashell/nix-secrets.git";
+      flake = false;
+    };
     astro-nvim = {
       # url = "github:LinuCC/dotvim";
       url = "github:smashell/NixAstroNvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, astro-nvim } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, astro-nvim, secrets } @inputs:
     let
       user = "%USER%";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
