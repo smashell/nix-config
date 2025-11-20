@@ -73,6 +73,15 @@ let name = "%NAME%";
       alias ls='ls --color=auto'
       alias ll='ls -l --color=auto'
       alias la='ls -la --color=auto'
+
+      # Yazi shell wrapper
+      function y() {
+	      local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	      yazi "$@" --cwd-file="$tmp"
+	      IFS= read -r -d "" cwd < "$tmp"
+	      [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	      rm -f -- "$tmp"
+      }
     '';
   };
 
@@ -108,6 +117,11 @@ let name = "%NAME%";
       )
     ];
     matchBlocks = {
+      "*" = {
+        # 对所有主机生效
+        serverAliveInterval = 60;
+        serverAliveCountMax = 3;
+      };
       "github.com" = {
         hostname = "ssh.github.com";
         port = 443;
@@ -243,20 +257,20 @@ let name = "%NAME%";
           ];
         };
         plugin = {
-          prepend_preloaders = [
-            { name = "*.csv"; run = "rich-preview"; }
-            { name = "*.md"; run = "rich-preview"; }
-            { name = "*.markdown"; run = "rich-preview"; }
-            { name = "*.rst"; run = "rich-preview"; }
-            { name = "*.ipynb"; run = "rich-preview"; }
-            { name = "*.json"; run = "rich-preview"; }
-          # # # Office Documents
-          # #           { mime = "application/openxmlformats-officedocument.*"; run = "office"; }
-          # #           { mime = "application/oasis.opendocument.*"; run = "office"; }
-          # #           { mime = "application/ms-*"; run = "office"; }
-          # #           { mime = "application/msword"; run = "office"; }
-          # #           { name = "*.docx"; run = "office"; }
-          ];
+          # prepend_preloaders = [
+          #   { name = "*.csv"; run = "rich-preview"; }
+          #   { name = "*.md"; run = "rich-preview"; }
+          #   { name = "*.markdown"; run = "rich-preview"; }
+          #   { name = "*.rst"; run = "rich-preview"; }
+          #   { name = "*.ipynb"; run = "rich-preview"; }
+          #   { name = "*.json"; run = "rich-preview"; }
+          # # # # Office Documents
+          # # #           { mime = "application/openxmlformats-officedocument.*"; run = "office"; }
+          # # #           { mime = "application/oasis.opendocument.*"; run = "office"; }
+          # # #           { mime = "application/ms-*"; run = "office"; }
+          # # #           { mime = "application/msword"; run = "office"; }
+          # # #           { name = "*.docx"; run = "office"; }
+          # ];
           # #
           # #           prepend_previewers = [
           # # # Office Documents
@@ -267,86 +281,86 @@ let name = "%NAME%";
           # #           { name = "*.docx"; run = "office"; }
           # #           ];
         }; # plugin
-        open = {
-          rules = [
-            # Markdown files
-            { name = "*.md"; use = "markdown"; }
-            { name = "*.markdown"; use = "markdown"; }
-            # Images
-            { name = "*.jpg"; use = "image"; }
-            { name = "*.jpeg"; use = "image"; }
-            { name = "*.png"; use = "image"; }
-            { name = "*.gif"; use = "image"; }
-            { name = "*.bmp"; use = "image"; }
-            { name = "*.svg"; use = "image"; }
-            { name = "*.webp"; use = "image"; }
-            # PDFs
-            { name = "*.pdf"; use = "pdf"; }
-            # CSV files
-            { name = "*.csv"; use = "csv"; }
-            # Office documents  
-            { name = "*.doc"; use = "office"; }
-            { name = "*.docx"; use = "office"; }
-            { name = "*.xls"; use = "office"; }
-            { name = "*.xlsx"; use = "office"; }
-            { name = "*.ppt"; use = "office"; }
-            { name = "*.pptx"; use = "office"; }
-            { name = "*.odt"; use = "office"; }
-            { name = "*.ods"; use = "office"; }
-            { name = "*.odp"; use = "office"; }
-            
-            # Text and code files - all open with Helix by default
-            { name = "*.txt"; use = "edit"; }
-            { name = "*.py"; use = "edit"; }
-            { name = "*.js"; use = "edit"; }
-            { name = "*.ts"; use = "edit"; }
-            { name = "*.tsx"; use = "edit"; }
-            { name = "*.jsx"; use = "edit"; }
-            { name = "*.rs"; use = "edit"; }
-            { name = "*.go"; use = "edit"; }
-            { name = "*.c"; use = "edit"; }
-            { name = "*.cpp"; use = "edit"; }
-            { name = "*.cc"; use = "edit"; }
-            { name = "*.cxx"; use = "edit"; }
-            { name = "*.h"; use = "edit"; }
-            { name = "*.hpp"; use = "edit"; }
-            { name = "*.hxx"; use = "edit"; }
-            { name = "*.css"; use = "edit"; }
-            { name = "*.scss"; use = "edit"; }
-            { name = "*.sass"; use = "edit"; }
-            { name = "*.html"; use = "edit"; }
-            { name = "*.htm"; use = "edit"; }
-            { name = "*.xml"; use = "edit"; }
-            { name = "*.yaml"; use = "edit"; }
-            { name = "*.yml"; use = "edit"; }
-            { name = "*.toml"; use = "edit"; }
-            { name = "*.json"; use = "edit"; }
-            { name = "*.jsonc"; use = "edit"; }
-            { name = "*.json5"; use = "edit"; }
-            { name = "*.ini"; use = "edit"; }
-            { name = "*.conf"; use = "edit"; }
-            { name = "*.cfg"; use = "edit"; }
-            { name = "*.nix"; use = "edit"; }
-            { name = "*.sh"; use = "edit"; }
-            { name = "*.bash"; use = "edit"; }
-            { name = "*.zsh"; use = "edit"; }
-            { name = "*.fish"; use = "edit"; }
-            { name = "*.vim"; use = "edit"; }
-            { name = "*.lua"; use = "edit"; }
-            { name = "*.rb"; use = "edit"; }
-            { name = "*.php"; use = "edit"; }
-            { name = "*.java"; use = "edit"; }
-            { name = "*.kt"; use = "edit"; }
-            { name = "*.swift"; use = "edit"; }
-            { name = "*.dart"; use = "edit"; }
-            { name = "*.sql"; use = "edit"; }
-            { name = "*.dockerfile"; use = "edit"; }
-            { name = "Dockerfile*"; use = "edit"; }
-            { name = "*.env"; use = "edit"; }
-            { name = "*.gitignore"; use = "edit"; }
-            { name = "*.gitconfig"; use = "edit"; }
-          ];
-        }; # open
+        # open = {
+        #   rules = [
+        #     # Markdown files
+        #     { name = "*.md"; use = "markdown"; }
+        #     { name = "*.markdown"; use = "markdown"; }
+        #     # Images
+        #     { name = "*.jpg"; use = "image"; }
+        #     { name = "*.jpeg"; use = "image"; }
+        #     { name = "*.png"; use = "image"; }
+        #     { name = "*.gif"; use = "image"; }
+        #     { name = "*.bmp"; use = "image"; }
+        #     { name = "*.svg"; use = "image"; }
+        #     { name = "*.webp"; use = "image"; }
+        #     # PDFs
+        #     { name = "*.pdf"; use = "pdf"; }
+        #     # CSV files
+        #     { name = "*.csv"; use = "csv"; }
+        #     # Office documents  
+        #     { name = "*.doc"; use = "office"; }
+        #     { name = "*.docx"; use = "office"; }
+        #     { name = "*.xls"; use = "office"; }
+        #     { name = "*.xlsx"; use = "office"; }
+        #     { name = "*.ppt"; use = "office"; }
+        #     { name = "*.pptx"; use = "office"; }
+        #     { name = "*.odt"; use = "office"; }
+        #     { name = "*.ods"; use = "office"; }
+        #     { name = "*.odp"; use = "office"; }
+        #
+        #     # Text and code files - all open with Helix by default
+        #     { name = "*.txt"; use = "edit"; }
+        #     { name = "*.py"; use = "edit"; }
+        #     { name = "*.js"; use = "edit"; }
+        #     { name = "*.ts"; use = "edit"; }
+        #     { name = "*.tsx"; use = "edit"; }
+        #     { name = "*.jsx"; use = "edit"; }
+        #     { name = "*.rs"; use = "edit"; }
+        #     { name = "*.go"; use = "edit"; }
+        #     { name = "*.c"; use = "edit"; }
+        #     { name = "*.cpp"; use = "edit"; }
+        #     { name = "*.cc"; use = "edit"; }
+        #     { name = "*.cxx"; use = "edit"; }
+        #     { name = "*.h"; use = "edit"; }
+        #     { name = "*.hpp"; use = "edit"; }
+        #     { name = "*.hxx"; use = "edit"; }
+        #     { name = "*.css"; use = "edit"; }
+        #     { name = "*.scss"; use = "edit"; }
+        #     { name = "*.sass"; use = "edit"; }
+        #     { name = "*.html"; use = "edit"; }
+        #     { name = "*.htm"; use = "edit"; }
+        #     { name = "*.xml"; use = "edit"; }
+        #     { name = "*.yaml"; use = "edit"; }
+        #     { name = "*.yml"; use = "edit"; }
+        #     { name = "*.toml"; use = "edit"; }
+        #     { name = "*.json"; use = "edit"; }
+        #     { name = "*.jsonc"; use = "edit"; }
+        #     { name = "*.json5"; use = "edit"; }
+        #     { name = "*.ini"; use = "edit"; }
+        #     { name = "*.conf"; use = "edit"; }
+        #     { name = "*.cfg"; use = "edit"; }
+        #     { name = "*.nix"; use = "edit"; }
+        #     { name = "*.sh"; use = "edit"; }
+        #     { name = "*.bash"; use = "edit"; }
+        #     { name = "*.zsh"; use = "edit"; }
+        #     { name = "*.fish"; use = "edit"; }
+        #     { name = "*.vim"; use = "edit"; }
+        #     { name = "*.lua"; use = "edit"; }
+        #     { name = "*.rb"; use = "edit"; }
+        #     { name = "*.php"; use = "edit"; }
+        #     { name = "*.java"; use = "edit"; }
+        #     { name = "*.kt"; use = "edit"; }
+        #     { name = "*.swift"; use = "edit"; }
+        #     { name = "*.dart"; use = "edit"; }
+        #     { name = "*.sql"; use = "edit"; }
+        #     { name = "*.dockerfile"; use = "edit"; }
+        #     { name = "Dockerfile*"; use = "edit"; }
+        #     { name = "*.env"; use = "edit"; }
+        #     { name = "*.gitignore"; use = "edit"; }
+        #     { name = "*.gitconfig"; use = "edit"; }
+        #   ];
+        # }; # open
       };
       # # for keymap.toml
       # keymap = {

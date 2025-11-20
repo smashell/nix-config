@@ -1,6 +1,34 @@
 { pkgs }:
 
-with pkgs; [
+with pkgs;
+let
+  iflow-cli = pkgs.stdenv.mkDerivation rec {
+    pname = "iflow-cli";
+    version = "0.3.24";
+
+    src = pkgs.fetchurl {
+      url = "https://registry.npmjs.org/@iflow-ai/iflow-cli/-/iflow-cli-${version}.tgz";
+      sha256 = "sha256-5qhYD3pTBXi2U39ZrssDG29kRfXSPnyxOqga3o33vZM=";
+    };
+
+    buildInputs = [ pkgs.nodejs ];
+
+    installPhase = ''
+      mkdir -p $out/lib/node_modules/@iflow-ai/iflow-cli
+      cp -r . $out/lib/node_modules/@iflow-ai/iflow-cli/
+      mkdir -p $out/bin
+      ln -s $out/lib/node_modules/@iflow-ai/iflow-cli/bundle/iflow.js $out/bin/iflow
+      chmod +x $out/lib/node_modules/@iflow-ai/iflow-cli/bundle/iflow.js
+    '';
+
+    meta = with pkgs.lib; {
+      description = "iFlow AI CLI tool";
+      homepage = "https://iflow.ai";
+      mainProgram = "iflow";
+    };
+  };
+in
+[
   # System & Terminal Utilities
   bash-completion
   bat
@@ -66,5 +94,8 @@ with pkgs; [
   obsidian
   zotero
   localsend
+  
+  # Custom packages
+  iflow-cli
 
 ]
