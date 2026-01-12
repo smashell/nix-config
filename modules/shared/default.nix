@@ -9,7 +9,7 @@ in
     username = "${user}";
     nerdfont = "FiraCode";
     nodePackage = pkgs.nodejs_20;
-    pythonPackage = pkgs.python311Full;
+    pythonPackage = pkgs.python3;
   };
 
   nixpkgs = {

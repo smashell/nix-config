@@ -4,11 +4,11 @@ with pkgs;
 let
   iflow-cli = pkgs.stdenv.mkDerivation rec {
     pname = "iflow-cli";
-    version = "0.3.24";
+    version = "0.4.16";
 
     src = pkgs.fetchurl {
       url = "https://registry.npmjs.org/@iflow-ai/iflow-cli/-/iflow-cli-${version}.tgz";
-      sha256 = "sha256-5qhYD3pTBXi2U39ZrssDG29kRfXSPnyxOqga3o33vZM=";
+      sha256 = "sha256-Rn4x3nkHepExeUaSUwSXuHlplxC+0/Q3w85YKqVtkqI=";
     };
 
     buildInputs = [ pkgs.nodejs ];
@@ -58,6 +58,7 @@ in
   difftastic
   ansible
   uv
+  yarn
 
   # Container & Cloud Native
   docker
@@ -86,16 +87,20 @@ in
 
   # Apps
   tmux
-  vscode
+  # vscode
   neovim
   yazi
-  yaziPlugins.rich-preview
+  #yaziPlugins.rich-preview
+
   # rich-cli            # Rich command-line interface for rich preview
   obsidian
   zotero
   localsend
+  zellij
+  drawio
+  # antigravity-nix.packages.x86_64-linux.default
   
   # Custom packages
   iflow-cli
-
+  claude-code
 ]

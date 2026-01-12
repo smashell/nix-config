@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
+      url = "github:zhaofengli/nix-homebrew";
     };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
@@ -23,21 +23,35 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-switch = {
+      url = "github:farion1231/homebrew-ccswitch";
+      flake = false;
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    secrets = {
-      url = "git+ssh://git@github.com/smashell/nix-secrets.git";
-      flake = false;
-    };
+    # secrets = {
+    #   url = "git+ssh://git@github.com/smashell/nix-secrets.git";
+    #   flake = false;
+    # };
     astro-nvim = {
       # url = "github:LinuCC/dotvim";
       url = "github:smashell/NixAstroNvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    claude-code.url = "github:sadjow/claude-code-nix";
+
+    # yazi.url = "github:sxyazi/yazi";
+
+    # antigravity-nix = {
+    #   url = "github:jacopone/antigravity-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, astro-nvim, secrets } @inputs:
+  # outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, astro-nvim, homebrew-switch, antigravity-nix, secrets } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, astro-nvim, homebrew-switch, claude-code } @inputs:
     let
       user = "%USER%";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
@@ -99,6 +113,7 @@
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
+                  "farion1231/homebrew-ccswitch" = homebrew-switch;
                 };
                 mutableTaps = false;
                 autoMigrate = true;

@@ -17,6 +17,7 @@ _:
   # "syncthing"
   "input-source-pro"
 
+
   # # Entertainment Tools
   # "vlc"
 
@@ -42,6 +43,16 @@ _:
   ## Development
   #"insomnia" # REST client
   #"wireshark" # network analyzer
+  
+  ##### tap then install
+  # brew tap farion1231/ccswitch #   # https://github.com/farion1231/homebrew-ccswitch
+  # brew install --cask cc-switch
+  # step: 
+  #     1. in flake.nix: add  ccswitch github in input 
+  #     2. in flake.nix: tap it in  darwin.lib.darwinSystem {
+  #     3.  add cask here as follows
+  {name="cc-switch"; greedy = true;}
+  "antigravity"
 
   # Office
   "picgo"

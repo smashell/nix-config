@@ -23,8 +23,10 @@ in
     shell = pkgs.zsh;
   };
 
+  # 1. nix-darwin 原生的 Homebrew 配置 (负责具体的软件包)
   homebrew = {
     enable = true;
+    # brewPrefix = "/Users/smashell/.nix-homebrew/bin"; # 强行指定到你的用户目录
     casks = pkgs.callPackage ./casks.nix {};
     # https://mynixos.com/nix-darwin/option/homebrew.onActivation.cleanup
     onActivation = {

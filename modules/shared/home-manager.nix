@@ -88,26 +88,40 @@ let name = "%NAME%";
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = name;
-    userEmail = email;
-    lfs = {
-      enable = true;
-    };
-    extraConfig = {
-      init.defaultBranch = "main";
+    settings = {
+      # 必须建立 user 这一层级（对应 Git 配置中的 [user]）
+      user = {
+        name = name;   # 对应原 userName
+        email = email;  # 对应原 userEmail
+      };
+      # 原来的 extraConfig 内容
+      init = {
+        defaultBranch = "main";
+      };
       core = {
-	    editor = "vim";
+        editor = "vim";
         autocrlf = "input";
       };
-      commit.gpgsign = false;
-      pull.rebase = true;
-      rebase.autoStash = true;
+      commit = {
+        gpgsign = false;
+      };
+      pull = {
+        rebase = true;
+      };
+      rebase = {
+        autoStash = true;
+      };
+    };
+
+    lfs = {
+      enable = true;
     };
   };
 
 
   ssh = {
     enable = true;
+    enableDefaultConfig = false; 
     includes = [
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
         "/home/${user}/.ssh/config_external"
@@ -391,20 +405,20 @@ let name = "%NAME%";
         sha256 = "sha256-EZVUftvEfyGIoBW/O81PeffDg4BhgsGlwfZL1RF85UA=";
       }; # plugins.compress
 
-      rich-preview = pkgs.yaziPlugins.rich-preview;
+      #rich-preview = pkgs.yaziPlugins.rich-preview;
     }; 
   }; # yazi
 
-  vscode = {
-    enable = true;
-    profiles = {
-      default = {
-        extensions = with pkgs.vscode-extensions; [
-          dracula-theme.theme-dracula
-          vscodevim.vim
-          yzhang.markdown-all-in-one
-        ];
-      };
-    };
-  }; # vscode
+  # vscode = {
+  #   enable = true;
+  #   profiles = {
+  #     default = {
+  #       extensions = with pkgs.vscode-extensions; [
+  #         dracula-theme.theme-dracula
+  #         vscodevim.vim
+  #         yzhang.markdown-all-in-one
+  #       ];
+  #     };
+  #   };
+  # }; # vscode
 }
