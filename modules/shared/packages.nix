@@ -4,11 +4,11 @@ with pkgs;
 let
   iflow-cli = pkgs.stdenv.mkDerivation rec {
     pname = "iflow-cli";
-    version = "0.4.16";
+    version = "0.5.0";
 
     src = pkgs.fetchurl {
       url = "https://registry.npmjs.org/@iflow-ai/iflow-cli/-/iflow-cli-${version}.tgz";
-      sha256 = "sha256-Rn4x3nkHepExeUaSUwSXuHlplxC+0/Q3w85YKqVtkqI=";
+      sha256 = "sha256-qDD97oOXSEVcXcdbwN/qQuNjeyeWnbi7+IKCwCnprew=";
     };
 
     buildInputs = [ pkgs.nodejs ];
